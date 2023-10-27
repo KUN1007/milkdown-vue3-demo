@@ -12,6 +12,7 @@ import { prism, prismConfig } from '@milkdown/plugin-prism'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { indent } from '@milkdown/plugin-indent'
+import { trailing } from '@milkdown/plugin-trailing'
 
 // KUN Visual Novel style
 import '@/styles/editor/index.scss'
