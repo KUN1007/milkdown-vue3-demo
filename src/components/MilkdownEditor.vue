@@ -7,6 +7,7 @@ import { gfm } from '@milkdown/preset-gfm'
 import { history } from '@milkdown/plugin-history'
 import { prism, prismConfig } from '@milkdown/plugin-prism'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
+import { clipboard } from '@milkdown/plugin-clipboard'
 
 import '@/styles/editor/index.scss'
 
@@ -77,6 +78,7 @@ const editorInfo = useEditor((root) =>
     })
     .use(listener)
     .use(commonmark)
+    .use(clipboard)
     .use(prism)
     .use(gfm)
     .use(history)

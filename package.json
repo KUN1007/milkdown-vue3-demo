@@ -11,6 +11,7 @@
   "dependencies": {
     "@milkdown/core": "^7.3.0",
     "@milkdown/ctx": "^7.3.0",
+    "@milkdown/plugin-clipboard": "^7.3.0",
     "@milkdown/plugin-history": "^7.3.0",
     "@milkdown/plugin-listener": "^7.3.0",
     "@milkdown/plugin-prism": "^7.3.0",
