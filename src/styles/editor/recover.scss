@@ -1,1 +1,17 @@
 /* For recover reset css */
+del {
+  text-decoration: line-through;
+}
+
+ul li {
+  list-style: circle;
+}
+
+ol li {
+  list-style: decimal;
+}
+
+/* Clear css check warning */
+p {
+  white-space: pre-wrap;
+}

@@ -1,14 +1,19 @@
 <script setup lang="ts">
+// KUN Visual Novel Menu
 import MilkdownMenu from './MilkdownMenu.vue'
+// Milkdown core
 import { Editor, rootCtx, defaultValueCtx } from '@milkdown/core'
 import { Milkdown, useEditor } from '@milkdown/vue'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
+// Milkdown Plugins
 import { history } from '@milkdown/plugin-history'
 import { prism, prismConfig } from '@milkdown/plugin-prism'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
+import { indent } from '@milkdown/plugin-indent'
 
+// KUN Visual Novel style
 import '@/styles/editor/index.scss'
 
 // Syntax highlight
@@ -76,12 +81,13 @@ const editorInfo = useEditor((root) =>
         },
       })
     })
-    .use(listener)
-    .use(commonmark)
-    .use(clipboard)
-    .use(prism)
-    .use(gfm)
     .use(history)
+    .use(commonmark)
+    .use(gfm)
+    .use(prism)
+    .use(listener)
+    .use(clipboard)
+    .use(indent)
 )
 </script>
 
@@ -94,23 +100,6 @@ const editorInfo = useEditor((root) =>
 </template>
 
 <style lang="scss">
-del {
-  text-decoration: line-through;
-}
-
-ul li {
-  list-style: circle;
-}
-
-ol li {
-  list-style: decimal;
-}
-
-/* Clear css check warning */
-p {
-  white-space: pre-wrap;
-}
-
 .milkdown {
   width: 100%;
   padding: 10px;
