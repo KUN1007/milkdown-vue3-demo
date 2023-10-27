@@ -9,6 +9,9 @@ import {
   wrapInBlockquoteCommand,
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
+  insertHrCommand,
+  toggleInlineCodeCommand,
+  updateLinkCommand,
 } from '@milkdown/preset-commonmark'
 import {
   insertTableCommand,
@@ -29,49 +32,53 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 
 <template>
   <div class="menu">
-    <button icon="undo" @click="call(undoCommand.key)">
+    <button @click="call(undoCommand.key)">
       <Icon icon="material-symbols:undo-rounded" />
     </button>
 
-    <button icon="redo" @click="call(redoCommand.key)">
+    <button @click="call(redoCommand.key)">
       <Icon icon="material-symbols:redo-rounded" />
     </button>
 
-    <button icon="format_bold" @click="call(toggleStrongCommand.key)">
+    <!-- Mark Group -->
+    <button @click="call(toggleStrongCommand.key)">
       <Icon icon="material-symbols:format-bold-rounded" />
     </button>
 
-    <button icon="format_italic" @click="call(toggleEmphasisCommand.key)">
+    <button @click="call(toggleEmphasisCommand.key)">
       <Icon icon="material-symbols:format-italic-rounded" />
     </button>
 
-    <button
-      icon="format_strikethrough"
-      @click="call(toggleStrikethroughCommand.key)"
-    >
+    <button @click="call(toggleStrikethroughCommand.key)">
       <Icon icon="material-symbols:strikethrough-s-rounded" />
     </button>
 
-    <button icon="table" @click="call(insertTableCommand.key)">
+    <button @click="call(insertTableCommand.key)">
       <Icon icon="material-symbols:table" />
     </button>
 
-    <button
-      icon="format_list_bulleted"
-      @click="call(wrapInBulletListCommand.key)"
-    >
+    <button @click="call(wrapInBulletListCommand.key)">
       <Icon icon="material-symbols:format-list-bulleted-rounded" />
     </button>
 
-    <button
-      icon="format_list_numbered"
-      @click="call(wrapInOrderedListCommand.key)"
-    >
+    <button @click="call(wrapInOrderedListCommand.key)">
       <Icon icon="material-symbols:format-list-numbered-rounded" />
     </button>
 
-    <button icon="format_quote" @click="call(wrapInBlockquoteCommand.key)">
+    <button @click="call(wrapInBlockquoteCommand.key)">
       <Icon icon="material-symbols:format-quote-rounded" />
+    </button>
+
+    <button @click="call(insertHrCommand.key)">
+      <Icon icon="material-symbols:horizontal-rule-rounded" />
+    </button>
+
+    <button @click="call(updateLinkCommand.key)">
+      <Icon icon="material-symbols:link-rounded" />
+    </button>
+
+    <button @click="call(toggleInlineCodeCommand.key)">
+      <Icon icon="material-symbols:code-blocks-outline-rounded" />
     </button>
   </div>
 </template>
