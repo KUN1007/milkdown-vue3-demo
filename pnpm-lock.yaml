@@ -26,6 +26,9 @@ dependencies:
   '@milkdown/plugin-prism':
     specifier: ^7.3.0
     version: 7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
+  '@milkdown/plugin-trailing':
+    specifier: ^7.3.0
+    version: 7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
   '@milkdown/preset-commonmark':
     specifier: ^7.3.0
     version: 7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
@@ -419,6 +422,22 @@ packages:
       '@milkdown/prose': 7.3.0
       '@milkdown/utils': 7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
       refractor: 4.8.1
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - '@milkdown/transformer'
+    dev: false
+
+  /@milkdown/plugin-trailing@7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0):
+    resolution: {integrity: sha512-y7yrP/85zfZ/Na67uVmlXn/9GgHAXvmrAObO30er1uGauNlIl7hbGh/D9ASTX7Xcr5b3gLVO84uIAPcd+iFT+g==}
+    peerDependencies:
+      '@milkdown/core': ^7.2.0
+      '@milkdown/ctx': ^7.2.0
+      '@milkdown/prose': ^7.2.0
+    dependencies:
+      '@milkdown/core': 7.3.0(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
+      '@milkdown/ctx': 7.3.0
+      '@milkdown/prose': 7.3.0
+      '@milkdown/utils': 7.3.0(@milkdown/core@7.3.0)(@milkdown/ctx@7.3.0)(@milkdown/prose@7.3.0)(@milkdown/transformer@7.3.0)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@milkdown/transformer'

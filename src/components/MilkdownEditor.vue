@@ -89,6 +89,7 @@ const editorInfo = useEditor((root) =>
     .use(listener)
     .use(clipboard)
     .use(indent)
+    .use(trailing)
 )
 </script>
 
