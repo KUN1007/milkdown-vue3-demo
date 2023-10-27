@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { MilkdownProvider } from '@milkdown/vue'
-import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/vue'
 import MilkdownEditor from './MilkdownEditor.vue'
 </script>
 
@@ -8,9 +7,7 @@ import MilkdownEditor from './MilkdownEditor.vue'
 <template>
   <div class="root">
     <MilkdownProvider>
-      <ProsemirrorAdapterProvider>
-        <MilkdownEditor />
-      </ProsemirrorAdapterProvider>
+      <MilkdownEditor />
     </MilkdownProvider>
   </div>
 </template>

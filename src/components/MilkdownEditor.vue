@@ -8,7 +8,7 @@ import { history } from '@milkdown/plugin-history'
 import { prism, prismConfig } from '@milkdown/plugin-prism'
 import { listener, listenerCtx } from '@milkdown/plugin-listener'
 
-import '@/styles/editor/code-theme.css'
+import '@/styles/editor/index.scss'
 
 // Syntax highlight
 import cpp from 'refractor/lang/cpp'
@@ -24,6 +24,7 @@ import sql from 'refractor/lang/sql'
 import tsx from 'refractor/lang/tsx'
 import markdown from 'refractor/lang/markdown'
 
+// Editor markdown preset
 const valueMarkdown = `# Milkdown Vanilla Shiki Highlight
 
 > You're scared of a world where you're needed.
@@ -111,6 +112,10 @@ p {
 .milkdown {
   width: 100%;
   padding: 10px;
+  /* Silence css check */
+  * {
+    white-space: pre-wrap;
+  }
   & > div {
     margin: 0 auto;
     min-height: 300px;
