@@ -134,14 +134,15 @@ const editorInfo = useEditor((root) =>
 .milkdown {
   width: 100%;
   padding: 10px;
+
   /* Silence css check */
   * {
     white-space: pre-wrap;
   }
+
   & > div:nth-child(1) {
     margin: 0 auto;
     min-height: 300px;
-    max-height: 500px;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {

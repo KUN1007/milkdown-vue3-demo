@@ -56,7 +56,7 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
     </button>
 
     <button @click="call(toggleInlineCodeCommand.key)">
-      <Icon icon="material-symbols:code-blocks-outline-rounded" />
+      <Icon icon="material-symbols:code-rounded" />
     </button>
   </div>
 </template>

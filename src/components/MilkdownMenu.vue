@@ -4,6 +4,7 @@ import { UseEditorReturn } from '@milkdown/vue'
 import type { CmdKey } from '@milkdown/core'
 import { callCommand } from '@milkdown/utils'
 import {
+  createCodeBlockCommand,
   toggleEmphasisCommand,
   toggleStrongCommand,
   wrapInBlockquoteCommand,
@@ -26,6 +27,14 @@ const { get, loading } = props.editorInfo
 
 const call = <T>(command: CmdKey<T>, payload?: T) => {
   return get()?.action(callCommand(command, payload))
+}
+
+// Select a language
+const selectLanguage = () => {}
+
+// Create code block
+const handleClickCodeBlock = () => {
+  call(createCodeBlockCommand.key, 'javascript')
 }
 </script>
 
@@ -68,8 +77,12 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
       <Icon icon="material-symbols:link-rounded" />
     </button>
 
-    <button @click="call(toggleInlineCodeCommand.key)">
+    <button @click="handleClickCodeBlock">
       <Icon icon="material-symbols:code-blocks-outline-rounded" />
+    </button>
+
+    <button @click="call(toggleInlineCodeCommand.key)">
+      <Icon icon="material-symbols:code-rounded" />
     </button>
   </div>
 </template>
@@ -77,6 +90,7 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 <style lang="scss" scoped>
 .menu {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   background-color: var(--kungalgame-trans-blue-1);
 
