@@ -13,6 +13,9 @@ import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { indent } from '@milkdown/plugin-indent'
 import { trailing } from '@milkdown/plugin-trailing'
+import { usePluginViewFactory } from '@prosemirror-adapter/vue'
+import { slashFactory } from '@milkdown/plugin-slash'
+import Slash from './plugins/Slash.vue'
 
 // KUN Visual Novel style
 import '@/styles/editor/index.scss'
@@ -52,14 +55,16 @@ Editor
 This is a demo for using Milkdown with **Vanilla Typescript**.
 The code block is highlighted by [shiki](https://shiki.matsu.io/).`
 
-const editorInfo = useEditor((root) =>
+const tooltip = slashFactory('Commands')
+const pluginViewFactory = usePluginViewFactory()
+
+useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root)
       ctx.set(defaultValueCtx, valueMarkdown)
 
       const listener = ctx.get(listenerCtx)
-
       listener.markdownUpdated((ctx, markdown, prevMarkdown) => {
         if (markdown !== prevMarkdown) {
         }
@@ -81,6 +86,11 @@ const editorInfo = useEditor((root) =>
           refractor.register(tsx)
         },
       })
+      ctx.set(tooltip.key, {
+        view: pluginViewFactory({
+          component: Slash,
+        }),
+      })
     })
     .use(history)
     .use(commonmark)
@@ -90,13 +100,14 @@ const editorInfo = useEditor((root) =>
     .use(clipboard)
     .use(indent)
     .use(trailing)
+    .use(tooltip)
 )
 </script>
 
 <!-- MilkdownEditor.vue -->
 <template>
   <div class="editor-container">
-    <MilkdownMenu :editorInfo="editorInfo" />
+    <MilkdownMenu />
     <Milkdown />
   </div>
 </template>

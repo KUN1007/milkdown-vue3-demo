@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import { editorViewCtx } from '@milkdown/core'
+import { SlashProvider } from '@milkdown/plugin-slash'
+import { createCodeBlockCommand } from '@milkdown/preset-commonmark'
+import { callCommand } from '@milkdown/utils'
+import { useInstance } from '@milkdown/vue'
+import { usePluginViewContext } from '@prosemirror-adapter/vue'
+import { onMounted, onUnmounted, ref, VNodeRef, watch } from 'vue'
+
+const { view, prevState } = usePluginViewContext()
+const [loading, get] = useInstance()
+
+const divRef = ref<VNodeRef>()
+
+let tooltipProvider: SlashProvider
+
+onMounted(() => {
+  tooltipProvider = new SlashProvider({
+    content: divRef.value as any,
+  })
+
+  tooltipProvider.update(view.value, prevState.value)
+})
+
+watch([view, prevState], () => {
+  tooltipProvider?.update(view.value, prevState.value)
+})
+
+onUnmounted(() => {
+  tooltipProvider.destroy()
+})
+
+const addCodeBlock = (e: Event) => {
+  if (loading.value) return
+
+  e.preventDefault()
+
+  get()!.action((ctx) => {
+    const view = ctx.get(editorViewCtx)
+    const { dispatch, state } = view
+    const { tr, selection } = state
+    const { from } = selection
+    dispatch(tr.deleteRange(from - 1, from))
+    return callCommand(createCodeBlockCommand.key)(ctx)
+  })
+}
+</script>
+
+<template>
+  <div ref="divRef">
+    <button class="bold" @mousedown="addCodeBlock">Code Block</button>
+  </div>
+</template>

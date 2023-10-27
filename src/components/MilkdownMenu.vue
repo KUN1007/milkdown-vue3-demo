@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { UseEditorReturn } from '@milkdown/vue'
+import { useInstance } from '@milkdown/vue'
 import type { CmdKey } from '@milkdown/core'
 import { callCommand } from '@milkdown/utils'
 import {
@@ -19,11 +19,7 @@ import {
 } from '@milkdown/preset-gfm'
 import { redoCommand, undoCommand } from '@milkdown/plugin-history'
 
-const props = defineProps<{
-  editorInfo: UseEditorReturn
-}>()
-
-const { get, loading } = props.editorInfo
+const [loading, get] = useInstance()
 
 const call = <T>(command: CmdKey<T>, payload?: T) => {
   return get()?.action(callCommand(command, payload))
