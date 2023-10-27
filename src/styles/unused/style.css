@@ -1,0 +1,172 @@
+.ProseMirror {
+  position: relative;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0;
+}
+.ProseMirror pre {
+  white-space: pre-wrap;
+}
+.ProseMirror li {
+  position: relative;
+}
+.ProseMirror-hideselection *::selection {
+  background: transparent;
+}
+.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+.ProseMirror-hideselection {
+  caret-color: transparent;
+}
+.ProseMirror-selectednode {
+  outline: 2px solid var(--kungalgame-blue-2);
+}
+li.ProseMirror-selectednode {
+  outline: none;
+}
+li.ProseMirror-selectednode:after {
+  content: '';
+  position: absolute;
+  left: -32px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  border: 2px solid var(--kungalgame-blue-2);
+  pointer-events: none;
+}
+img.ProseMirror-separator {
+  display: inline !important;
+  border: none !important;
+  margin: 0 !important;
+}
+.ProseMirror .tableWrapper {
+  overflow-x: auto;
+}
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+.ProseMirror td,
+.ProseMirror th {
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+.ProseMirror .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  z-index: 20;
+  background-color: var(--kungalgame-blue-2);
+  pointer-events: none;
+}
+.ProseMirror.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+.ProseMirror .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: '';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--kungalgame-trans-blue-2);
+  pointer-events: none;
+}
+.milkdown-theme-nord blockquote {
+  border-left-width: 4px;
+  border-color: var(--kungalgame-blue-4);
+  padding-left: 1rem;
+  font-family: ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+  font-style: normal;
+}
+.milkdown-theme-nord code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    Liberation Mono, Courier New, monospace;
+  font-weight: 400;
+  color: var(--kungalgame-blue-4);
+}
+.milkdown-theme-nord pre code {
+  color: var(--kungalgame-white);
+}
+.milkdown-theme-nord img {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  display: inline-block;
+  max-width: 100%;
+}
+.milkdown-theme-nord.prose
+  :where(blockquote):not(:where([class~='not-prose'] *)) {
+  font-weight: 400;
+}
+.milkdown-theme-nord.prose
+  :where(ol > li):not(:where([class~='not-prose'] *))::marker,
+.milkdown-theme-nord.prose
+  :where(ul > li):not(:where([class~='not-prose'] *))::marker {
+  color: var(--kungalgame-blue-4);
+}
+.milkdown-theme-nord.prose
+  :where(blockquote p:first-of-type):not(:where([class~='not-prose'] *)):before,
+.milkdown-theme-nord.prose
+  :where(blockquote p:first-of-type):not(:where([class~='not-prose'] *)):after {
+  content: '';
+}
+.milkdown-theme-nord.prose
+  :where(code):not(:where([class~='not-prose'] *)):before,
+.milkdown-theme-nord.prose
+  :where(code):not(:where([class~='not-prose'] *)):after {
+  content: '';
+}
+.milkdown-theme-nord.prose .tableWrapper {
+  position: relative;
+  margin-bottom: 0.5rem;
+  overflow-x: auto;
+}
+.milkdown-theme-nord.prose table {
+  margin: 1rem !important;
+  overflow: visible !important;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-shadow: var(--shadow);
+}
+@media (min-width: 640px) {
+  .milkdown-theme-nord.prose table {
+    border-radius: 0.5rem;
+  }
+}
+.milkdown-theme-nord.prose td,
+th {
+  padding: 0.75rem 1.5rem !important;
+}
+.milkdown-theme-nord.prose tr {
+  border-bottom-width: 1px;
+  border-color:  var(--kungalgame-blue-4);
+}
+.dark .milkdown-theme-nord.prose tr {
+  border-color:  var(--kungalgame-blue-4);
+}
+.milkdown-theme-nord.prose :where(td, th) p {
+  margin: 0 !important;
+}
+.milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
+  background-color: var(--kungalgame-trans-blue-0);
+}
+.dark .milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
+  background-color: var(--kungalgame-trans-blue-2);
+}
+.milkdown-theme-nord.prose.ProseMirror .selectedCell:after {
+  background-color: var(--kungalgame-trans-blue-2);
+}
+.milkdown-theme-nord.prose br[data-is-inline='true'],
+.milkdown-theme-nord.prose br[data-is-inline='true']:after {
+  content: ' ';
+}

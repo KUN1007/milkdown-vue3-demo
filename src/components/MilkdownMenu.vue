@@ -11,7 +11,7 @@ import {
   wrapInOrderedListCommand,
   insertHrCommand,
   toggleInlineCodeCommand,
-  updateLinkCommand,
+  toggleLinkCommand,
 } from '@milkdown/preset-commonmark'
 import {
   insertTableCommand,
@@ -73,7 +73,7 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
       <Icon icon="material-symbols:horizontal-rule-rounded" />
     </button>
 
-    <button @click="call(updateLinkCommand.key)">
+    <button @click="call(toggleLinkCommand.key)">
       <Icon icon="material-symbols:link-rounded" />
     </button>
 
