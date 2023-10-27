@@ -12,7 +12,8 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true,
+    "composite": true,
+    "noEmit": false,
     "typeRoots": ["node_modules/@types", "./typings"],
     "baseUrl": "./",
     "paths": {
