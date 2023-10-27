@@ -17,7 +17,6 @@ import {
   insertTableCommand,
   toggleStrikethroughCommand,
 } from '@milkdown/preset-gfm'
-import { redoCommand, undoCommand } from '@milkdown/plugin-history'
 
 const props = defineProps<{
   editorInfo: UseEditorReturn
@@ -32,14 +31,6 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 
 <template>
   <div class="menu">
-    <button @click="call(undoCommand.key)">
-      <Icon icon="material-symbols:undo-rounded" />
-    </button>
-
-    <button @click="call(redoCommand.key)">
-      <Icon icon="material-symbols:redo-rounded" />
-    </button>
-
     <!-- Mark Group -->
     <button @click="call(toggleStrongCommand.key)">
       <Icon icon="material-symbols:format-bold-rounded" />
@@ -104,6 +95,7 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 
     &:hover {
       border: 1px solid var(--kungalgame-blue-4);
+      color: var(--kungalgame-blue-4);
     }
   }
 }
