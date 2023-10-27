@@ -14,8 +14,13 @@ import { clipboard } from '@milkdown/plugin-clipboard'
 import { indent } from '@milkdown/plugin-indent'
 import { trailing } from '@milkdown/plugin-trailing'
 import { usePluginViewFactory } from '@prosemirror-adapter/vue'
+// KUN Visual Novel Custom tooltip
 import { tooltipFactory } from '@milkdown/plugin-tooltip'
 import Tooltip from './plugins/Tooltip.vue'
+// Custom text size calculate
+import Size from './plugins/Size.vue'
+import { $prose } from '@milkdown/utils'
+import { Plugin } from '@milkdown/prose/state'
 
 // KUN Visual Novel style
 import '@/styles/editor/index.scss'
@@ -103,6 +108,17 @@ const editorInfo = useEditor((root) =>
     .use(indent)
     .use(trailing)
     .use(tooltip)
+    // Add custom plugin view
+    .use(
+      $prose(
+        () =>
+          new Plugin({
+            view: pluginViewFactory({
+              component: Size,
+            }),
+          })
+      )
+    )
 )
 </script>
 
@@ -122,7 +138,7 @@ const editorInfo = useEditor((root) =>
   * {
     white-space: pre-wrap;
   }
-  & > div {
+  & > div:nth-child(1) {
     margin: 0 auto;
     min-height: 300px;
     max-height: 500px;
