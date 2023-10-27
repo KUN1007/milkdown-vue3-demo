@@ -87,10 +87,24 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 .menu {
   display: flex;
   width: 100%;
+  background-color: var(--kungalgame-trans-blue-1);
 
   button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: none;
     margin: 5px;
     font-size: 22px;
+    background-color: var(--kungalgame-trans-white-9);
+    border: 1px solid var(--kungalgame-trans-white-9);
+    transition: all 0.2s;
+
+    &:hover {
+      border: 1px solid var(--kungalgame-blue-4);
+    }
   }
 }
 </style>

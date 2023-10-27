@@ -13,6 +13,9 @@ import { listener, listenerCtx } from '@milkdown/plugin-listener'
 import { clipboard } from '@milkdown/plugin-clipboard'
 import { indent } from '@milkdown/plugin-indent'
 import { trailing } from '@milkdown/plugin-trailing'
+import { usePluginViewFactory } from '@prosemirror-adapter/vue'
+import { tooltipFactory } from '@milkdown/plugin-tooltip'
+import Tooltip from './plugins/Tooltip.vue'
 
 // KUN Visual Novel style
 import '@/styles/editor/index.scss'
@@ -52,6 +55,9 @@ Editor
 This is a demo for using Milkdown with **Vanilla Typescript**.
 The code block is highlighted by [shiki](https://shiki.matsu.io/).`
 
+const tooltip = tooltipFactory('Text')
+const pluginViewFactory = usePluginViewFactory()
+
 const editorInfo = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
@@ -81,6 +87,12 @@ const editorInfo = useEditor((root) =>
           refractor.register(tsx)
         },
       })
+
+      ctx.set(tooltip.key, {
+        view: pluginViewFactory({
+          component: Tooltip,
+        }),
+      })
     })
     .use(history)
     .use(commonmark)
@@ -90,6 +102,7 @@ const editorInfo = useEditor((root) =>
     .use(clipboard)
     .use(indent)
     .use(trailing)
+    .use(tooltip)
 )
 </script>
 
