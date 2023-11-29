@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 // KUN Visual Novel Menu
-import MilkdownMenu from './MilkdownMenu.vue'
+import MilkdownMenu from './plugins/MilkdownMenu.vue'
 // Milkdown core
-import { Editor, rootCtx, defaultValueCtx } from '@milkdown/core'
+import { Editor, rootCtx, rootAttrsCtx, defaultValueCtx } from '@milkdown/core'
 import { Milkdown, useEditor } from '@milkdown/vue'
 import { commonmark } from '@milkdown/preset-commonmark'
 import { gfm } from '@milkdown/preset-gfm'
@@ -26,68 +27,92 @@ import { Plugin } from '@milkdown/prose/state'
 import '@/styles/editor/index.scss'
 
 // Syntax highlight
+import c from 'refractor/lang/c'
 import cpp from 'refractor/lang/cpp'
 import csharp from 'refractor/lang/csharp'
 import css from 'refractor/lang/css'
 import go from 'refractor/lang/go'
+import haskell from 'refractor/lang/haskell'
 import python from 'refractor/lang/python'
+import java from 'refractor/lang/java'
 import javascript from 'refractor/lang/javascript'
 import typescript from 'refractor/lang/typescript'
 import jsx from 'refractor/lang/jsx'
+import kotlin from 'refractor/lang/kotlin'
+import r from 'refractor/lang/r'
 import rust from 'refractor/lang/rust'
+import scala from 'refractor/lang/scala'
 import sql from 'refractor/lang/sql'
 import tsx from 'refractor/lang/tsx'
 import markdown from 'refractor/lang/markdown'
 
 // Editor markdown preset
-const valueMarkdown = `# Milkdown Vanilla Shiki Highlight
+const value = ref(`## 出处：
 
-> You're scared of a world where you're needed.
+**星辰恋曲的白色永恒 (アストラエアの白き永遠)**，及其 \`FD\`, \`psv\` 版
 
-\`\`\`rust
-Editor
-  .make()
-  .config(ctx => {
-    ctx.set(rootCtx, '#app')
-    ctx.set(defaultValueCtx, markdown)
-  })
-  .config(nord)
-  .use(commonmark)
-  .use(milkShiki)
-  .create()
-\`\`\`
+[官网](http://www.favo-soft.jp/soft/product/WhiteEternity/index.html)
 
-This is a demo for using Milkdown with **Vanilla Typescript**.
-The code block is highlighted by [shiki](https://shiki.matsu.io/).`
+## 来点名言
 
+> 叭咕叭咕\~ 全部叭咕叭咕\~
+
+![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/sd_102_30.png)
+
+# 我要和雪雪结婚结婚结婚！！！！
+
+![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/yuki_exs_e01a%20\(Image%200\).png)
+`)
+
+const editorHight = computed(() => 300 + 'px')
+const valueMarkdown = computed(() => value.value)
 const tooltip = tooltipFactory('Text')
 const pluginViewFactory = usePluginViewFactory()
+const container = ref<HTMLElement | null>(null)
+const isEditorFocus = ref(false)
+const editorContent = ref('')
 
 const editorInfo = useEditor((root) =>
   Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root)
-      ctx.set(defaultValueCtx, valueMarkdown)
+      ctx.set(rootAttrsCtx, {
+        roles: 'kun-galgame-milkdown-editor',
+        'aria-label': 'kun-galgame-milkdown-editor',
+      })
+      ctx.set(defaultValueCtx, valueMarkdown.value)
 
       const listener = ctx.get(listenerCtx)
-
       listener.markdownUpdated((ctx, markdown, prevMarkdown) => {
         if (markdown !== prevMarkdown) {
+          editorContent.value = markdown
         }
+      })
+      listener.blur(() => {
+        isEditorFocus.value = false
+      })
+      listener.focus(() => {
+        isEditorFocus.value = true
       })
 
       ctx.set(prismConfig.key, {
         configureRefractor: (refractor) => {
+          refractor.register(c)
           refractor.register(cpp)
           refractor.register(csharp)
           refractor.register(css)
           refractor.register(go)
+          refractor.register(haskell)
           refractor.register(python)
           refractor.register(markdown)
+          refractor.register(java)
           refractor.register(javascript)
           refractor.register(typescript)
           refractor.register(jsx)
+          refractor.register(kotlin)
+          refractor.register(r)
           refractor.register(rust)
+          refractor.register(scala)
           refractor.register(sql)
           refractor.register(tsx)
         },
@@ -108,13 +133,14 @@ const editorInfo = useEditor((root) =>
     .use(indent)
     .use(trailing)
     .use(tooltip)
-    // Add custom plugin view
+    // Add custom plugin view, calculate markdown text size
     .use(
       $prose(
         () =>
           new Plugin({
             view: pluginViewFactory({
               component: Size,
+              root: () => (container.value ? container.value : root),
             }),
           })
       )
@@ -124,46 +150,129 @@ const editorInfo = useEditor((root) =>
 
 <!-- MilkdownEditor.vue -->
 <template>
-  <div class="editor-container">
+  <div ref="container" class="editor-container">
     <MilkdownMenu :editorInfo="editorInfo" />
-    <Milkdown />
+    <Milkdown
+      class="editor"
+      :class="isEditorFocus || editorContent ? 'active' : ''"
+    />
   </div>
 </template>
 
 <style lang="scss">
-.milkdown {
-  width: 100%;
-  padding: 10px;
+.editor-container {
+  .editor {
+    position: relative;
 
-  /* Silence css check */
-  * {
-    white-space: pre-wrap;
-  }
+    .milkdown {
+      width: 100%;
+      padding: 10px;
 
-  & > div:nth-child(1) {
-    margin: 0 auto;
-    min-height: 300px;
-    overflow-y: scroll;
+      /* Silence css check */
+      * {
+        white-space: pre-wrap;
+      }
 
-    &::-webkit-scrollbar {
-      display: inline;
-      width: 7px;
-      height: 0;
+      & > div:nth-child(1) {
+        transition: all 0.2s;
+        margin: 0 auto;
+        min-height: v-bind(editorHight);
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          display: inline;
+          width: 7px;
+          height: 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          cursor: default;
+          background: var(--kungalgame-blue-4);
+          border-radius: 3px;
+        }
+
+        /* Compatible with Firefox */
+        scrollbar-width: thin;
+        scrollbar-color: var(--kungalgame-blue-4) var(--kungalgame-blue-1); /* Firefox 64+ */
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      del {
+        text-decoration: line-through;
+      }
+
+      p {
+        margin: 17px 0;
+      }
+
+      blockquote {
+        margin: 17px 0;
+        padding: 10px;
+        font-size: 18px;
+        border-left: 4px solid var(--kungalgame-blue-4);
+        background-color: var(--kungalgame-trans-blue-0);
+
+        p {
+          margin: 0;
+        }
+      }
+
+      pre {
+        margin: 17px 0;
+        border: 1px solid var(--kungalgame-blue-4);
+        border-radius: 5px;
+        padding: 17px;
+        background-color: var(--kungalgame-trans-white-2);
+        position: relative;
+
+        code {
+          font-size: 15px;
+          font-family: monospace;
+        }
+      }
+
+      a {
+        cursor: pointer;
+        font-style: oblique;
+        font-weight: bold;
+        color: var(--kungalgame-blue-4);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      table {
+        border: 1px solid var(--kungalgame-blue-4);
+        border-radius: 5px;
+        white-space: nowrap;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--kungalgame-blue-4);
+        padding: 3px;
+        text-align: left;
+      }
+
+      tr:nth-child(even) {
+        background-color: var(--kungalgame-trans-blue-1);
+      }
+
+      ul li,
+      ol li {
+        color: var(--kungalgame-blue-4);
+      }
+
+      .tableWrapper {
+        color: var(--kungalgame-font-color-3);
+        position: relative;
+        overflow-x: auto;
+      }
     }
-
-    &::-webkit-scrollbar-thumb {
-      cursor: default;
-      background: var(--kungalgame-blue-4);
-      border-radius: 3px;
-    }
-
-    /* Compatible with Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: var(--kungalgame-blue-4) var(--kungalgame-blue-1); /* Firefox 64+ */
   }
-}
-
-.prose {
-  max-width: 1000px !important;
 }
 </style>

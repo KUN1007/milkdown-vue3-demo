@@ -17,7 +17,7 @@ import MilkdownEditor from './MilkdownEditor.vue'
 
 <style lang="scss" scoped>
 .root {
-  margin: 10px;
+  margin: 50px;
   border: 1px solid var(--kungalgame-blue-4);
 }
 </style>
