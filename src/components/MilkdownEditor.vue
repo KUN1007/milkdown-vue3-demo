@@ -47,22 +47,24 @@ import tsx from 'refractor/lang/tsx'
 import markdown from 'refractor/lang/markdown'
 
 // Editor markdown preset
-const value = ref(`## 出处：
+// const value = ref(`## Source:
 
-**星辰恋曲的白色永恒 (アストラエアの白き永遠)**，及其 \`FD\`, \`psv\` 版
+// **AstralAir no Shiroki Towa (アストラエアの白き永遠)**, and its \`FD\`, \`psv\` versions
 
-[官网](http://www.favo-soft.jp/soft/product/WhiteEternity/index.html)
+// [Official Website](http://www.favo-soft.jp/soft/product/WhiteEternity/index.html)
 
-## 来点名言
+// ## Famous Quotes
 
-> 叭咕叭咕\~ 全部叭咕叭咕\~
+// > Babble babble~ All babble babble~
 
-![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/sd_102_30.png)
+// ![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/sd_102_30.png)
 
-# 我要和雪雪结婚结婚结婚！！！！
+// # I want to marry Yuki Yuki Yuki!!!!!
 
-![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/yuki_exs_e01a%20\(Image%200\).png)
-`)
+// ![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/yuki_exs_e01a%20\(Image%200\).png)
+// `)
+
+const value = ref('')
 
 const editorHight = computed(() => 300 + 'px')
 const valueMarkdown = computed(() => value.value)
@@ -85,6 +87,8 @@ const editorInfo = useEditor((root) =>
       const listener = ctx.get(listenerCtx)
       listener.markdownUpdated((ctx, markdown, prevMarkdown) => {
         if (markdown !== prevMarkdown) {
+          console.log(markdown)
+
           editorContent.value = markdown
         }
       })
