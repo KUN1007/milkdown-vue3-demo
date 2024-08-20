@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import type { CmdKey } from '@milkdown/core'
 import { TooltipProvider } from '@milkdown/plugin-tooltip'
 import {
   toggleStrongCommand,
@@ -11,16 +10,22 @@ import { toggleStrikethroughCommand } from '@milkdown/preset-gfm'
 import { callCommand } from '@milkdown/utils'
 import { useInstance } from '@milkdown/vue'
 import { usePluginViewContext } from '@prosemirror-adapter/vue'
-import { onMounted, onUnmounted, ref, VNodeRef, watch } from 'vue'
+import { ref, h, onMounted, watch, onUnmounted } from 'vue'
+import type { VNodeRef } from 'vue'
+import type { CmdKey } from '@milkdown/core'
 
 const { view, prevState } = usePluginViewContext()
 const [loading, get] = useInstance()
 
 const divRef = ref<VNodeRef>()
-
 let tooltipProvider: TooltipProvider
 
-onMounted(async () => {
+const KunBold = h(Icon, { icon: 'lucide:bold' })
+const KunItalic = h(Icon, { icon: 'lucide:italic' })
+const KunStrikethrough = h(Icon, { icon: 'lucide:strikethrough' })
+const KunCode = h(Icon, { icon: 'lucide:code-xml' })
+
+onMounted(() => {
   tooltipProvider = new TooltipProvider({
     content: divRef.value as any,
   })
@@ -44,30 +49,36 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
 <template>
   <div v-if="loading" class="tooltip" ref="divRef">
     <button @click="call(toggleStrongCommand.key)">
-      <Icon icon="material-symbols:format-bold-rounded" />
+      <KunBold icon="lucide:bold" />
     </button>
 
     <button @click="call(toggleEmphasisCommand.key)">
-      <Icon icon="material-symbols:format-italic-rounded" />
+      <KunItalic icon="lucide:italic" />
     </button>
 
     <button @click="call(toggleStrikethroughCommand.key)">
-      <Icon icon="material-symbols:strikethrough-s-rounded" />
+      <KunStrikethrough icon="lucide:strikethrough" />
     </button>
 
     <button @click="call(toggleInlineCodeCommand.key)">
-      <Icon icon="material-symbols:code-rounded" />
+      <KunCode icon="lucide:code-xml" />
     </button>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .tooltip {
+  position: absolute;
   display: flex;
   background-color: var(--kungalgame-trans-white-2);
-  border: 1px solid var(--kungalgame-blue-4);
+  border: 1px solid var(--kungalgame-blue-5);
   border-radius: 5px;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+
+  &[data-show='false'] {
+    display: none;
+  }
 
   button {
     cursor: pointer;
@@ -79,13 +90,13 @@ const call = <T>(command: CmdKey<T>, payload?: T) => {
     border-radius: 5px;
     margin: 5px;
     font-size: 22px;
-    background-color: var(--kungalgame-trans-white-9);
-    border: 1px solid var(--kungalgame-trans-white-9);
-    transition: all 0.2s;
+    color: var(--kungalgame-font-color-3);
+    background-color: transparent;
+    border: 1px solid transparent;
 
     &:hover {
-      border: 1px solid var(--kungalgame-blue-4);
-      color: var(--kungalgame-blue-4);
+      border: 1px solid var(--kungalgame-blue-5);
+      color: var(--kungalgame-blue-5);
     }
   }
 }

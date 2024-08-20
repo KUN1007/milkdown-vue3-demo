@@ -15,6 +15,7 @@ import { clipboard } from '@milkdown/plugin-clipboard'
 import { indent } from '@milkdown/plugin-indent'
 import { trailing } from '@milkdown/plugin-trailing'
 import { usePluginViewFactory } from '@prosemirror-adapter/vue'
+import { automd } from '@milkdown/plugin-automd'
 // KUN Visual Novel Custom tooltip
 import { tooltipFactory } from '@milkdown/plugin-tooltip'
 import Tooltip from './plugins/Tooltip.vue'
@@ -47,24 +48,24 @@ import tsx from 'refractor/lang/tsx'
 import markdown from 'refractor/lang/markdown'
 
 // Editor markdown preset
-// const value = ref(`## Source:
+const value = ref(`## Source:
 
-// **AstralAir no Shiroki Towa (アストラエアの白き永遠)**, and its \`FD\`, \`psv\` versions
+**AstralAir no Shiroki Towa (アストラエアの白き永遠)**, and its \`FD\`, \`psv\` versions
 
-// [Official Website](http://www.favo-soft.jp/soft/product/WhiteEternity/index.html)
+[Official Website](http://www.favo-soft.jp/soft/product/WhiteEternity/index.html)
 
-// ## Famous Quotes
+## Famous Quotes
 
-// > Babble babble~ All babble babble~
+> Babble babble~ All babble babble~
 
-// ![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/sd_102_30.png)
+![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/sd_102_30.png)
 
-// # I want to marry Yuki Yuki Yuki!!!!!
+# I want to marry Yuki Yuki Yuki!!!!!
 
-// ![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/yuki_exs_e01a%20\(Image%200\).png)
-// `)
+![](https://cdn.jsdelivr.net/gh/kun-moe/kun-image@main/img/yuki_exs_e01a%20(Image%200).png)
+`)
 
-const value = ref('')
+// const value = ref('')
 
 const editorHight = computed(() => 300 + 'px')
 const valueMarkdown = computed(() => value.value)
@@ -137,6 +138,7 @@ const editorInfo = useEditor((root) =>
     .use(indent)
     .use(trailing)
     .use(tooltip)
+    .use(automd)
     // Add custom plugin view, calculate markdown text size
     .use(
       $prose(
@@ -194,10 +196,6 @@ const editorInfo = useEditor((root) =>
           background: var(--kungalgame-blue-4);
           border-radius: 3px;
         }
-
-        /* Compatible with Firefox */
-        scrollbar-width: thin;
-        scrollbar-color: var(--kungalgame-blue-4) var(--kungalgame-blue-1); /* Firefox 64+ */
       }
 
       img {

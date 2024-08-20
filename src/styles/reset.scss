@@ -22,11 +22,6 @@
   display: none;
 }
 
-/* Compatibility for Firefox to hide scrollbars */
-* {
-  scrollbar-width: none; /* Firefox 64+ */
-}
-
 /* Ensure that button and select elements inherit the font family */
 button,
 select {
